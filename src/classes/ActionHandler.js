@@ -24,12 +24,12 @@ class ActionHandler {
     }
 
     waitUntilEventResult(event) {
-        return new Promise(async resolve => {
+        return new Promise(async (resolve, reject) => {
             this.pendingEvents.push({
                 event: event,
                 result: null
             });
-            const index = this.pendingEvents.findIndex(event => event.event === event);
+            const index = this.pendingEvents.findIndex(e => e.event === event);
             if(index > -1) {
                 while(true) {
                     if(this.pendingEvents[index].result !== null) {
@@ -38,12 +38,14 @@ class ActionHandler {
                     await new Promise(r => setTimeout(r, 25));
                 }
                 resolve(this.pendingEvents[index].result);
-            } throw "Pending event not found.";
+            } else {
+                reject("Pending event not found.");
+            }
         });
     }
 
     resultEvent(event, result) {
-        const index = this.pendingEvents.findIndex(event => event.event === event);
+        const index = this.pendingEvents.findIndex(e => e.event === event);
         if(index > -1) {
             this.pendingEvents[index].result = JSON.parse(result);
         }
@@ -60,7 +62,9 @@ class ActionHandler {
             CefSharp.PostMessage(string);
         }
 
-        const result = this.waitUntilEventResult("command:searchDevice");
+        const result = await this.waitUntilEventResult("command:searchDevice");
+
+        return result.ipAddress;
     }
 }
 
