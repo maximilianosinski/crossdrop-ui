@@ -57,7 +57,7 @@ class ActionHandler {
         });
 
         if(this.os === "android") {
-            android.JSInterface.processData(string);
+            AndroidInterface.processEvent(string);
         } else if(this.os === "windows") {
             CefSharp.PostMessage(string);
         }

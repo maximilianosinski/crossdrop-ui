@@ -19,11 +19,11 @@ const App = () => {
     if(isPending) {
         return (
             <div className={"flex flex-col items-center justify-center h-screen"}>
-                <div className={"flex flex-row items-center text-2xl font-bold gap-3"}>
-                    <FontAwesomeIcon icon={faSpinner} spin/>
+                <div className={"flex flex-row items-center text-2xl font-bold"}>
+                    <FontAwesomeIcon className={"mr-3"} icon={faSpinner} spin/>
                     <h1>Searching for device...</h1>
                 </div>
-                <p className={"text-xs my-2"}>Another device must have ChunkDrop open to be found.</p>
+                <p className={"text-xs my-2"}>Your destination device must have ChunkDrop open to be found.</p>
             </div>
         )
     }
