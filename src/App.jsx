@@ -81,8 +81,8 @@ const App = () => {
                     }
                 </div>
                 {currentFileName !== "" && progress > -1 &&
-                    <div className={"fixed bottom-0 left-0 h-36 w-full px-10 flex flex-col items-center mb-14"}>
-                        <div className={"flex flex-col h-full w-full justify-between p-5 rounded-lg shadow-blue-400/50 shadow-xl"}>
+                    <div className={"fixed bottom-0 left-0 w-full px-10 flex flex-col items-center mb-14"}>
+                        <div className={"flex flex-col h-full w-full justify-between px-5 py-3 rounded-lg shadow-blue-400/50 shadow-xl"}>
                             <div className={"flex flex-row items-center"}>
                                 <FontAwesomeIcon className={"mr-3"} icon={faSpinner} spin/>
                                 <div className={"flex flex-col"}>
@@ -90,12 +90,14 @@ const App = () => {
                                     <span className={"font-bold text-xs text-gray-400"}>{currentFileName}</span>
                                 </div>
                             </div>
-                            <div className={"flex flex-col"}>
-                                <span className={"font-bold mb-2"}>{Math.round(parseFloat(progress))}%</span>
-                                <div className={"bg-gray-300 w-full h-1 rounded-full"}>
-                                    <div style={{width: `${progress}%`}} className={"bg-blue-400 h-full rounded-full"}></div>
+                            {false &&
+                                <div className={"flex flex-col"}>
+                                    <span className={"font-bold mb-2"}>{Math.round(parseFloat(progress))}%</span>
+                                    <div className={"bg-gray-300 w-full h-1 rounded-full"}>
+                                        <div style={{width: `${progress}%`}} className={"bg-blue-400 h-full rounded-full"}></div>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 }
