@@ -1,3 +1,5 @@
+import Connection from "./Connection.js";
+
 class ActionHandler {
     os = "windows";
     pendingEvents = [];
@@ -31,13 +33,16 @@ class ActionHandler {
             });
             const index = this.pendingEvents.findIndex(e => e.event === event);
             if(index > -1) {
+                let result = null;
                 while(true) {
                     if(this.pendingEvents[index].result !== null) {
+                        result = this.pendingEvents[index].result;
+                        this.pendingEvents.splice(index);
                         break;
                     }
                     await new Promise(r => setTimeout(r, 25));
                 }
-                resolve(this.pendingEvents[index].result);
+                resolve(result);
             } else {
                 reject("Pending event not found.");
             }
@@ -52,19 +57,25 @@ class ActionHandler {
     }
 
     async searchDevice() {
-        const string = JSON.stringify({
-            event: "command:searchDevice"
-        });
-
-        if(this.os === "android") {
-            AndroidInterface.processEvent(string);
-        } else if(this.os === "windows") {
-            CefSharp.PostMessage(string);
-        }
+        window.location.href = "action.event:command:searchDevice";
 
         const result = await this.waitUntilEventResult("command:searchDevice");
 
-        return result.ipAddress;
+        return new Connection(result.ipAddress);
+    }
+
+    async selectFile() {
+        window.location.href = "action.event:command:selectFile";
+
+        const result = await this.waitUntilEventResult("command:selectFile");
+
+        return result.name;
+    }
+
+    async sendFile() {
+        window.location.href = "action.event:command:sendFile";
+
+        await this.waitUntilEventResult("command:sendFile");
     }
 }
 
