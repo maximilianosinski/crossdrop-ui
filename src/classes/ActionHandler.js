@@ -67,6 +67,14 @@ class ActionHandler {
 
         return true;
     }
+
+    static async customConnect(ipAddress) {
+        window.location = `action.event:command:customConnect:${ipAddress}`;
+
+        await this.waitUntilEventResult("command:customConnect");
+
+        return true;
+    }
 }
 
 export default ActionHandler;
